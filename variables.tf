@@ -15,19 +15,27 @@
  */
 
 variable "apis" {
-  type        = list
-  default     = []
+  type = list(object({
+    id = string
+  }))
+  default = []
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
 
 variable "service_accounts" {
-  type        = list
-  default     = []
+  type = list(object({
+    id = string
+    roles = list(string)
+  }))
+  default = []
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
 
 variable "members" {
-  type        = list
-  default     = []
+  type = list(object({
+    id = string
+    roles = list(string)
+  }))
+  default = []
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }

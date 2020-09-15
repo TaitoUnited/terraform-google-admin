@@ -1,12 +1,12 @@
-# Google Cloud administration
+# Google Cloud Project administration
 
 Example usage:
 
 ```
 provider "google" {
-  project = "my-infrastructure"
-  region  = "europe-west1"
-  zone    = "europe-west1b"
+  project          = "my-infrastructure"
+  region           = "europe-west1"
+  zone             = "europe-west1b"
 }
 
 module "admin" {
@@ -14,15 +14,36 @@ module "admin" {
   version          = "1.0.0"
   providers        = [ google ]
 
-  apis             = yamldecode(file("${path.root}/../infra.yaml"))["apis"]
-  permissions      = yamldecode(file("${path.root}/../infra.yaml"))["permissions"]["zone"]
+  members          = yamldecode(file("${path.root}/../infra.yaml"))["members"]
   service_accounts = yamldecode(file("${path.root}/../infra.yaml"))["serviceAccounts"]
+  apis             = yamldecode(file("${path.root}/../infra.yaml"))["apis"]
 }
 ```
 
 Example YAML:
 
 ```
+# TIP: You can create custom roles at the project or organization level
+# https://cloud.google.com/iam/docs/creating-custom-roles
+members:
+  - id: "group:devops@mydomain.com"
+    roles: [ "roles/owner" ]
+  - id: "group:developers@mydomain.com"
+    roles: [ "custom/developer" ]
+  - id: "user:jane.external@anotherdomain.com"
+    roles: [ "custom/limitedDeveloper" ]
+  - id: "user:jane.external@anotherdomain.com"
+    roles: [ "custom/limitedDataViewer" ]
+
+# TODO: implement roles with google_project_iam_member
+serviceAccounts:
+  - id: "database-proxy"
+    roles: []
+  - id: "cicd-tester"
+    roles: []
+  - id: "my-kms-viewer"
+    roles: [ "roles/cloudkms.publicKeyViewer" ]
+
 apis:
   - id: "cloudbuild.googleapis.com"
   - id: "cloudkms.googleapis.com"
@@ -34,24 +55,6 @@ apis:
   - id: "servicenetworking.googleapis.com"
   - id: "sql-component.googleapis.com"
   - id: "sqladmin.googleapis.com"
-
-serviceAccounts:
-  - id: "database-proxy"
-  - id: "cicd-tester"
-  - id: "my-kms-viewer"
-    # TODO: implement roles with google_project_iam_member
-    roles: [ "roles/cloudkms.publicKeyViewer" ]
-
-# TODO: custom roles
-members:
-  - id: "group:devops@mydomain.com"
-    roles: [ "roles/owner" ]
-  - id: "group:developers@mydomain.com"
-    roles: [ "custom/developer" ]
-  - id: "user:jane.external@anotherdomain.com"
-    roles: [ "custom/limitedDeveloper" ]
-  - id: "user:jane.external@anotherdomain.com"
-    roles: [ "custom/limitedDataViewer" ]
 ```
 
 Combine with the following modules to get a complete infrastructure defined by YAML:
