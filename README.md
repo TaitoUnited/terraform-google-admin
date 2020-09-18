@@ -12,7 +12,6 @@ provider "google" {
 module "admin" {
   source           = "TaitoUnited/admin/google"
   version          = "1.0.0"
-  providers        = [ google ]
 
   members          = yamldecode(file("${path.root}/../infra.yaml"))["members"]
   service_accounts = yamldecode(file("${path.root}/../infra.yaml"))["serviceAccounts"]
@@ -46,7 +45,9 @@ serviceAccounts:
 
 apis:
   - id: "cloudbuild.googleapis.com"
+  - id: "cloudfunctions.googleapis.com"
   - id: "cloudkms.googleapis.com"
+  - id: "cloudscheduler.googleapis.com"
   - id: "compute.googleapis.com"
   - id: "container.googleapis.com"
   - id: "containerregistry.googleapis.com"
@@ -66,6 +67,7 @@ Combine with the following modules to get a complete infrastructure defined by Y
 - [Databases](https://registry.terraform.io/modules/TaitoUnited/databases/google)
 - [Storage](https://registry.terraform.io/modules/TaitoUnited/storage/google)
 - [Monitoring](https://registry.terraform.io/modules/TaitoUnited/monitoring/google)
+- [Events](https://registry.terraform.io/modules/TaitoUnited/events/google)
 - [PostgreSQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/postgresql)
 - [MySQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/mysql)
 
