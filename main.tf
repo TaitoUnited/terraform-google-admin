@@ -15,7 +15,9 @@
  */
 
 locals {
-  members = var.members
+  members = var.members != null ? var.members : []
+  apis = var.apis != null ? var.apis : []
+  serviceAccounts = var.service_accounts != null ? var.service_accounts : []
 
   memberRoles = flatten([
     for member in local.members: [
@@ -26,8 +28,4 @@ locals {
       }
     ]
   ])
-
-  serviceAccounts = var.service_accounts
-
-  apis = var.apis
 }
