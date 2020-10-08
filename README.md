@@ -34,7 +34,6 @@ members:
   - id: "user:jane.external@anotherdomain.com"
     roles: [ "custom/limitedDataViewer" ]
 
-# TODO: implement roles with google_project_iam_member
 serviceAccounts:
   - id: "database-proxy"
     roles: []
@@ -71,8 +70,6 @@ Combine with the following modules to get a complete infrastructure defined by Y
 - [PostgreSQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/postgresql)
 - [MySQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/mysql)
 
-Similar modules are also available for AWS, Azure, and DigitalOcean. All modules are used by [infrastructure templates](https://taitounited.github.io/taito-cli/templates#infrastructure-templates) of [Taito CLI](https://taitounited.github.io/taito-cli/).
-
-TIP: See also [Google Cloud project resources](https://registry.terraform.io/modules/TaitoUnited/project-resources/google), [Full Stack Helm Chart](https://github.com/TaitoUnited/taito-charts/blob/master/full-stack), and [full-stack-template](https://github.com/TaitoUnited/full-stack-template).
+Similar modules are also available for AWS, Azure, and DigitalOcean. All modules are used by [infrastructure templates](https://taitounited.github.io/taito-cli/templates#infrastructure-templates) of [Taito CLI](https://taitounited.github.io/taito-cli/). TIP: See also [Google Cloud project resources](https://registry.terraform.io/modules/TaitoUnited/project-resources/google), [Full Stack Helm Chart](https://github.com/TaitoUnited/taito-charts/blob/master/full-stack), and [full-stack-template](https://github.com/TaitoUnited/full-stack-template).
 
 Contributions are welcome!

@@ -20,3 +20,10 @@ resource "google_project_iam_member" "member" {
   role       = local.memberRoles[count.index].role
   member     = local.memberRoles[count.index].member
 }
+
+resource "google_project_iam_member" "service_account" {
+  count      = length(local.serviceAccountRoles)
+
+  role       = local.serviceAccountRoles[count.index].role
+  member     = local.serviceAccountRoles[count.index].member
+}

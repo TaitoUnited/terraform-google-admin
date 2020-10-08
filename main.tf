@@ -28,4 +28,14 @@ locals {
       }
     ]
   ])
+
+  serviceAccountRoles = flatten([
+    for serviceAccount in local.serviceAccounts: [
+      for role in serviceAccount.roles:
+      {
+        role = role
+        member = serviceAccount.id
+      }
+    ]
+  ])
 }
