@@ -34,7 +34,7 @@ locals {
       for role in serviceAccount.roles:
       {
         role = role
-        member = serviceAccount.id
+        member = "serviceAccount:${serviceAccount.id}"
       }
     ]
   ])
