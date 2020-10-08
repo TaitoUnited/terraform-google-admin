@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+data "google_project" "project" {
+}
+
 locals {
   members = var.members != null ? var.members : []
   apis = var.apis != null ? var.apis : []
@@ -34,7 +37,7 @@ locals {
       for role in serviceAccount.roles:
       {
         role = role
-        member = "serviceAccount:${serviceAccount.id}"
+        member = "serviceAccount:${serviceAccount.id}@${data.google_project.project.project_id}.iam.gserviceaccount.com"
       }
     ]
   ])

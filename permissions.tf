@@ -22,6 +22,7 @@ resource "google_project_iam_member" "member" {
 }
 
 resource "google_project_iam_member" "service_account" {
+  depends_on = [google_service_account.service_account]
   count      = length(local.serviceAccountRoles)
 
   role       = local.serviceAccountRoles[count.index].role
