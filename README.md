@@ -6,12 +6,14 @@ Example usage:
 provider "google" {
   project          = "my-infrastructure"
   region           = "europe-west1"
-  zone             = "europe-west1b"
+  zone             = "europe-west1-b"
 }
 
 module "admin" {
   source           = "TaitoUnited/admin/google"
   version          = "1.0.0"
+
+  project_id       = "my-infrastructure"
 
   members          = yamldecode(file("${path.root}/../infra.yaml"))["members"]
   service_accounts = yamldecode(file("${path.root}/../infra.yaml"))["serviceAccounts"]
