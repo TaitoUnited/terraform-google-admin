@@ -15,9 +15,9 @@
  */
 
 resource "google_project_service" "api" {
-  count      = length(local.apis)
+  for_each   = {for item in local.apis: item.id => item}
 
-  service    = local.apis[count.index].id
+  service    = each.value.id
   disable_dependent_services = true
   disable_on_destroy         = false
 }

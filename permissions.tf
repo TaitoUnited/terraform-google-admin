@@ -15,16 +15,16 @@
  */
 
 resource "google_project_iam_member" "member" {
-  count      = length(local.memberRoles)
+  for_each   = {for item in local.memberRoles: item.key => item}
 
-  role       = local.memberRoles[count.index].role
-  member     = local.memberRoles[count.index].member
+  role       = each.value.role
+  member     = each.value.member
 }
 
 resource "google_project_iam_member" "service_account" {
   depends_on = [google_service_account.service_account]
-  count      = length(local.serviceAccountRoles)
+  for_each   = {for item in local.serviceAccountRoles: item.key => item}
 
-  role       = local.serviceAccountRoles[count.index].role
-  member     = local.serviceAccountRoles[count.index].member
+  role       = each.value.role
+  member     = each.value.member
 }
