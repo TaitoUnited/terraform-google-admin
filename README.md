@@ -15,7 +15,7 @@ module "admin" {
 
   project_id       = "my-infrastructure"
 
-  members          = yamldecode(file("${path.root}/../infra.yaml"))["members"]
+  permissions      = yamldecode(file("${path.root}/../infra.yaml"))["permissions"]
   service_accounts = yamldecode(file("${path.root}/../infra.yaml"))["serviceAccounts"]
   apis             = yamldecode(file("${path.root}/../infra.yaml"))["apis"]
 }
@@ -24,46 +24,53 @@ module "admin" {
 Example YAML:
 
 ```
-# TIP: You can create custom roles at the project or organization level
-# https://cloud.google.com/iam/docs/creating-custom-roles
-members:
-  - id: "group:devops@mydomain.com"
-    roles: [ "roles/owner" ]
-  - id: "group:developers@mydomain.com"
-    roles: [ "custom/developer" ]
-  - id: "user:jane.external@anotherdomain.com"
-    roles: [ "custom/limitedDeveloper" ]
-  - id: "user:jane.external@anotherdomain.com"
-    roles: [ "custom/limitedDataViewer" ]
+permissions:
+  - id: group:devops@mydomain.com
+    roles:
+      - roles/owner
+  - id: group:developers@mydomain.com
+    roles:
+      - custom/developer
+  - id: user:jane.external@anotherdomain.com
+    roles:
+      - custom/limitedDeveloper
+  - id: user:jane.external@anotherdomain.com
+    roles:
+      - custom/limitedDataViewer
 
 serviceAccounts:
-  - id: "database-proxy"
-    roles: []
-  - id: "cicd-tester"
-    roles: []
-  - id: "my-kms-viewer"
-    roles: [ "roles/cloudkms.publicKeyViewer" ]
+  - name: database-proxy
+  - name: cicd-tester
+  - name: my-kms-viewer
+    roles:
+      - roles/cloudkms.publicKeyViewer
 
 apis:
-  - id: "cloudbuild.googleapis.com"
-  - id: "cloudfunctions.googleapis.com"
-  - id: "cloudkms.googleapis.com"
-  - id: "cloudscheduler.googleapis.com"
-  - id: "compute.googleapis.com"
-  - id: "container.googleapis.com"
-  - id: "containerregistry.googleapis.com"
-  - id: "monitoring.googleapis.com"
-  - id: "pubsub.googleapis.com"
-  - id: "servicenetworking.googleapis.com"
-  - id: "sql-component.googleapis.com"
-  - id: "sqladmin.googleapis.com"
+  - id: cloudbuild.googleapis.com
+  - id: cloudfunctions.googleapis.com
+  - id: cloudkms.googleapis.com
+  - id: cloudscheduler.googleapis.com
+  - id: compute.googleapis.com
+  - id: container.googleapis.com
+  - id: containerregistry.googleapis.com
+  - id: monitoring.googleapis.com
+  - id: pubsub.googleapis.com
+  - id: servicenetworking.googleapis.com
+  - id: sql-component.googleapis.com
+  - id: sqladmin.googleapis.com
 ```
+
+YAML attributes:
+
+- See variables.tf for all the supported YAML attributes.
+- TIP: See [Creating custom roles](https://cloud.google.com/iam/docs/creating-custom-roles) on how to create custom roles at the project or organization level.
 
 Combine with the following modules to get a complete infrastructure defined by YAML:
 
 - [Admin](https://registry.terraform.io/modules/TaitoUnited/admin/google)
 - [DNS](https://registry.terraform.io/modules/TaitoUnited/dns/google)
 - [Network](https://registry.terraform.io/modules/TaitoUnited/network/google)
+- [Compute](https://registry.terraform.io/modules/TaitoUnited/compute/google)
 - [Kubernetes](https://registry.terraform.io/modules/TaitoUnited/kubernetes/google)
 - [Databases](https://registry.terraform.io/modules/TaitoUnited/databases/google)
 - [Storage](https://registry.terraform.io/modules/TaitoUnited/storage/google)

@@ -15,12 +15,12 @@
  */
 
 locals {
-  members = var.members != null ? var.members : []
-  apis = var.apis != null ? var.apis : []
-  serviceAccounts = var.service_accounts != null ? var.service_accounts : []
+  permissions = try(var.permissions, [])
+  apis = try(var.apis, [])
+  serviceAccounts = try(var.service_accounts, [])
 
   memberRoles = flatten([
-    for member in local.members: [
+    for member in local.permissions: [
       for role in member.roles:
       {
         key  = "${member.id}-${role}"
@@ -36,7 +36,7 @@ locals {
       {
         key  = "${serviceAccount.id}-${role}"
         role = role
-        member = "serviceAccount:${serviceAccount.id}@${var.project_id}.iam.gserviceaccount.com"
+        member = "serviceAccount:${serviceAccount.name}@${var.project_id}.iam.gserviceaccount.com"
       }
     ]
   ])

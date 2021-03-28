@@ -29,13 +29,13 @@ variable "apis" {
 variable "service_accounts" {
   type = list(object({
     id = string
-    roles = list(string)
+    roles = optional(list(string))
   }))
   default = []
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
 
-variable "members" {
+variable "permissions" {
   type = list(object({
     id = string
     roles = list(string)
