@@ -15,9 +15,9 @@
  */
 
 locals {
-  permissions = try(var.permissions, [])
-  apis = try(var.apis, [])
-  serviceAccounts = try(var.service_accounts, [])
+  permissions = coalesce(var.permissions, [])
+  apis = coalesce(var.apis, [])
+  serviceAccounts = coalesce(var.service_accounts, [])
 
   memberRoles = flatten([
     for member in local.permissions: [
