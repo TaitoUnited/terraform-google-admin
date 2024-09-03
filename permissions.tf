@@ -19,6 +19,7 @@ resource "google_project_iam_member" "member" {
 
   role       = each.value.role
   member     = each.value.member
+  project    = var.project_id
 }
 
 resource "google_project_iam_member" "service_account" {
@@ -27,4 +28,5 @@ resource "google_project_iam_member" "service_account" {
 
   role       = each.value.role
   member     = each.value.member
+  project    = var.project_id
 }
