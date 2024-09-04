@@ -17,6 +17,6 @@
 resource "google_service_account" "service_account" {
   for_each   = {for item in local.serviceAccounts: item.id => item}
 
-  account_id   = each.value.name
+  account_id   = each.value.id
   display_name = each.value.id
 }
