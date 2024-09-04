@@ -36,7 +36,7 @@ locals {
       {
         key  = "${serviceAccount.id}-${role}"
         role = role
-        member = "serviceAccount:${serviceAccount.name}@${var.project_id}.iam.gserviceaccount.com"
+        member = "serviceAccount:${serviceAccount.id}@${var.project_id}.iam.gserviceaccount.com"
       }
     ]
   ])

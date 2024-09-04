@@ -39,9 +39,9 @@ permissions:
       - custom/limitedDataViewer
 
 serviceAccounts:
-  - name: database-proxy
-  - name: cicd-tester
-  - name: my-kms-viewer
+  - id: database-proxy
+  - id: cicd-tester
+  - id: my-kms-viewer
     roles:
       - roles/cloudkms.publicKeyViewer
 
