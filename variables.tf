@@ -28,7 +28,7 @@ variable "apis" {
 
 variable "service_accounts" {
   type = list(object({
-    id = string
+    name = optional(string)
     roles = optional(list(string))
   }))
   default = []
