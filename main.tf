@@ -34,9 +34,9 @@ locals {
     for serviceAccount in local.serviceAccounts: [
       for role in serviceAccount.roles:
       {
-        key  = "${serviceAccount.id}-${role}"
+        key  = "${serviceAccount.name}-${role}"
         role = role
-        member = "serviceAccount:${serviceAccount.id}@${var.project_id}.iam.gserviceaccount.com"
+        member = "serviceAccount:${serviceAccount.name}@${var.project_id}.iam.gserviceaccount.com"
       }
     ]
   ])
